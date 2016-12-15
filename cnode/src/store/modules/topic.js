@@ -1,11 +1,13 @@
 import * as types from '../mutations'
 const state = {
-  data: ''
+  data: {
+    author: ''
+  }
 }
 const mutations = {
   [types.UPDATETOPIC] (state, topic) {
-    for (var key in topic.data) {
-      console.log(key + '-----' + topic.data[key])
+    for (let key in topic.data) {
+      console.log(key + '------' + topic.data[key])
     }
     state.data = topic.data
   }

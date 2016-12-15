@@ -22,11 +22,6 @@
 import {mapActions, mapGetters} from 'vuex'
 import {timefilter} from '../utils/filter.js'
 export default{
-  data () {
-    return {
-      topic: ''
-    }
-  },
   methods: {
     ...mapActions({
       updatetopiclatest: 'getTopic'

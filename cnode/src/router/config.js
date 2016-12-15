@@ -13,10 +13,5 @@ export default [
     path: '/content/:id',
     name: 'content',
     component: require('src/pages/article.vue')
-  },
-  {
-    path: '/:tab',
-    name: 'changeList',
-    component: require('src/pages/home.vue')
   }
 ]

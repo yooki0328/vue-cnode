@@ -3,7 +3,6 @@ import App from './App'
 import store from './store'
 import router from './router'
 /* eslint-disable no-new */
-console.log(1)
 new Vue({
   store,
   router,
@@ -13,4 +12,3 @@ new Vue({
   // route,
   // store
 }).$mount('#app')
-console.log(2)

@@ -15,7 +15,6 @@ export const getDatas = ({commit}, options) => {
 }
 export const getTopic = ({commit}, id) => {
   let url = getApi().topic + id
-  console.log(getApi())
   global.fetch(url).then((res) => {
     return res.json()
   }).then((data) => {

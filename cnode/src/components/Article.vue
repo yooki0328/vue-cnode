@@ -15,9 +15,7 @@
              </span>
              <span v-if="data.top" class="top">置顶</span>
              <span v-else-if="data.good" class="top">精华</span>
-             <span v-else>
-                  <span class="tab">{{getTab(data)}}</span>
-             </span>
+             <span v-else class="tab">{{getTab(data)}}</span>
           <router-link :to="{
             name: 'content',
             params: {
@@ -28,11 +26,11 @@
     </div>
     <div class="page_bar">
       <ul>
-        <li v-if="showFirst"><a @click="prevPage">Previous</a></li>
-        <li v-for="index in indexs" :class="{'active':curPage == index}">
-          <a @click="skipPage(index)">{{index}}</a>
+        <li v-if="this.cur!==0"><a @click="prevPage" href="#">Previous</a></li>
+        <li v-for="index in indexs" :class="{'active':cur == index}">
+          <a @click="skipPage(index)" href="#">{{cur+index}}</a>
         </li>
-        <li v-if="showLast"><a @click="nextPage">Next</a></li>
+        <li><a @click="nextPage" href="#">Next</a></li>
       </ul>
     </div>
   </article>
@@ -44,15 +42,15 @@ export default{
     return {
       tab: '',
       currentBar: '',
-      curPage: '',
-      indexs: '',
+      cur: 0,
+      indexs: [1, 2, 3, 4, 5],
       showFirst: '',
       showLast: '',
       options: {
         method: 'GET',
-        page: 8,
+        page: 1,
         tab: '',
-        limit: 20,
+        limit: 15,
         mdrender: false
       },
       navbars: [
@@ -104,13 +102,16 @@ export default{
       }
     },
     skipPage (index) {
-      this.cur = index
+      this.options.page = index + this.cur
+      this.updatedataslatest(this.options)
     },
     prevPage () {
       this.cur--
+      this.skipPage(this.cur)
     },
     nextPage () {
       this.cur++
+      this.skipPage(this.cur)
     },
     ...mapActions({
       updatedataslatest: 'getDatas'
@@ -159,6 +160,8 @@ ul li a{
   overflow:hidden;
   border-bottom:1px solid #f1f1f1;
   padding:10px;
+  height:2em;
+
 }
 .content div{
   display:none;
@@ -190,6 +193,9 @@ ul li a{
   color:#b4b4b4;
 }
 .topic a{
+  
+  overflow:hidden; 
+  height:15px;
   text-decoration:none;
   color:black;
 }
@@ -206,5 +212,27 @@ ul li a{
   padding:2px 4px;
   -webkit-border-radius:3px;
   font-size:12px;
+}
+.page_bar{
+  display:block;
+  margin-top:10px;
+  overflow:hidden;
+}
+.page_bar ul{
+  list-style-type:none;
+  width:50%;
+  border-radius:4px;
+}
+.page_bar ul li{
+  display:inline;
+}
+.page_bar ul li a{
+  float:left;
+  padding:4px 12px;
+  line-height:20px;
+  text-decoration:none;
+  background:#fff;
+  color:#4078c0;
+  border:1px solid #e5e5e5;
 }
 </style>
