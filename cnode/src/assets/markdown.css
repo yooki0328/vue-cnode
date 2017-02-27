@@ -1,115 +1,3 @@
-<template>
-   <article>
-      <div class="title">
-        <span class="first">
-          <span v-if="topic.top" class="title_top">置顶</span>
-          <span v-else="topic.good" class="title_top">精华</span>
-          {{topic.title}}
-        </span>
-        <ul class="second">
-          <li>发布于{{topic.create_at | timefilter}}</li>
-          <li>作者{{topic.author.loginname}}</li>
-          <li>{{topic.visit_count}}次浏览</li>
-          <li>最后一次编辑是{{topic.last_reply_at | timefilter}}</li>
-          <li>来自{{topic.tab}}</li>
-       </ul>
-      </div>
-      <hr>
-        <div v-html="topic.content" class="markdown-body"></div>
-      <div class="comment">
-      <div  class="reply" v-for = "(reply,index) in topic.replies">
-        <img :src="reply.author.avatar_url">
-        <div class="user_info">
-        <a href="#">{{reply.author.loginname}}</a>
-        <a href="#">{{index+1}}楼&nbsp{{reply.create_at|timefilter}}</a>
-        </div>
-        <div v-html="reply.content" class="markdown-body lalala"></div>
-      </div>
-      <div>
-  </article>
-</template>
-<script>
-import {mapActions, mapGetters} from 'vuex'
-import {timefilter} from '../utils/filter.js'
-export default{
-  methods: {
-    ...mapActions({
-      updatetopiclatest: 'getTopic'
-    })
-  },
-  computed: {
-    ...mapGetters(['topic'])
-  },
-  filters: {
-    timefilter
-  },
-  created () {
-    if (this.$route.params.id) {
-      this.updatetopiclatest(this.$route.params.id)
-    } else {
-      this.updatetopiclatest(0)
-    }
-  }
-}
-</script>
-<style>
-article{
-  background-color:#e1e1e1;
-}
-article .title{
-  overflow:hidden;
-  border-radius:5px;
-}
-article .title .first{
-  display:block;
-  padding:10px 0px;
-  font-size:20px;
-  font-weight:700;
-}
-article .title .first .title_top{
-  font-size:17px;
-  color:#fff;
-  background:#80bd01;
-  padding:2px;
-  border-radius:3px;
-}
-article .title .second{
-  clear: both;
-  padding:5px;
-}
-article .title .second li{
-   display:inline;
-   padding:5px;
-   font-size:12px;
-   color:#838383;
-}
-.comment{
-  border-radius:5px;
-  padding:30px 20px;
-  background-color:#f1f1f1;
-}
-.comment a{
-  text-decoration:none;
-  color:#666;
-}
-.comment a:hover{
-  color:#08C;
-}
-.comment .reply{
-  border-top:1px solid #fff;
-}
-.comment img{
-  width:30px;
-  height:30px;
-  border-radius:3px;
-  margin-right:15px;
-}
-.comment .user_info{
-  display:inline;
-}
-.lalala{
-  margin-left:40px;
-}
 @font-face {
   font-family: octicons-link;
   src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
@@ -120,7 +8,6 @@ article .title .second li{
   -webkit-text-size-adjust: 100%;
   line-height: 1.5;
   color: #333;
-  border-radius:5px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   line-height: 1.5;
@@ -792,4 +679,3 @@ article .title .second li{
 .markdown-body hr {
   border-bottom-color: #eee;
 }
-</style>
