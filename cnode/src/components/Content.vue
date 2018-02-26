@@ -17,7 +17,7 @@
       <hr>
         <div v-html="topic.content" class="markdown-body"></div>
       <div class="comment">
-      <div  class="reply" v-for = "(reply,index) in topic.replies">
+      <div  class="reply" v-for = "(reply,index) in topic.replies" :key="index">
         <img :src="reply.author.avatar_url">
         <div class="user_info">
         <a href="#">{{reply.author.loginname}}</a>
@@ -25,7 +25,7 @@
         </div>
         <div v-html="reply.content" class="markdown-body lalala"></div>
       </div>
-      <div>
+      </div>
   </article>
 </template>
 <script>
